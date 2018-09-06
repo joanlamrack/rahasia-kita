@@ -4,7 +4,7 @@ import "carbon-components/css/carbon-components.min.css";
 
 export default class PasswordWidgetItem extends Component {
 	isPatternMatch = () =>{
-		return this.props.regex.test(this.props.stringRef)
+		return this.props.regex.test(this.props.stringToTest)
 	}
 
 	render() {
