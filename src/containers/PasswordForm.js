@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { Form, FormGroup , TextInput, Button} from "carbon-components-react";
+import { Form, FormGroup, TextInput, Button } from "carbon-components-react";
 import PasswordWidget from "../components/PasswordWidget";
 
 export class PasswordForm extends Component {
 	constructor() {
 		super();
 		this.state = {
-			password:"",
-			username:"",
-			url:"",
+			password: "",
+			username: "",
+			url: "",
+			enableButton: false,
 			passwordPattern: [
 				{
 					direction:
@@ -37,38 +38,75 @@ export class PasswordForm extends Component {
 		};
 	}
 
-	handlePassword = (e)=>{
+	updateButtonStatus = () => {
+		let status = this.state.passwordPattern
+			.map(x => x.pattern)
+			.reduce((acc, cur) => {
+				return acc && cur.test(this.state.password);
+			}, true);
 		this.setState({
-			password:e.target.value
-		})
-	}
+			enableButton: status
+		});
+	};
 
-	handleUsername = (e)=>{
+	handlePassword = e => {
+		this.setState(
+			{
+				password: e.target.value
+			},
+			this.updateButtonStatus
+		);
+	};
+
+	handleUsername = e => {
 		this.setState({
-			username:e.target.value
-		})
-	}
+			username: e.target.value
+		});
+	};
 
-	handleUrl = (e)=>{
+	handleUrl = e => {
 		this.setState({
-			url:e.target.value
-		})
-	}
+			url: e.target.value
+		});
+	};
 
-	handleSubmit = (e) =>{
-		console.log({...this.state, passwordPattern:""})
-	}
+	handleSubmit = e => {
+		console.log({ ...this.state, passwordPattern: "" });
+	};
 
 	render() {
 		return (
 			<Form>
-				<FormGroup>
-					<TextInput id="url" onChange={this.handleUrl} type="text" required labelText="Tautan"></TextInput>
-					<TextInput id="username" onChange={this.handleUsername} type="text" required labelText="Username"></TextInput>
-					<TextInput id="password" onChange={this.handlePassword} type="password" required labelText="Kata Sandi"></TextInput>
+				<FormGroup legendText="">
+					<TextInput
+						id="url"
+						onChange={this.handleUrl}
+						type="text"
+						required
+						labelText="Tautan"
+					/>
+					<TextInput
+						id="username"
+						onChange={this.handleUsername}
+						type="text"
+						required
+						labelText="Username"
+					/>
+					<TextInput
+						id="password"
+						onChange={this.handlePassword}
+						type="password"
+						required
+						labelText="Kata Sandi"
+					/>
 				</FormGroup>
-				<PasswordWidget passwordPattern={this.state.passwordPattern} stringToTest={this.state.password} />
-				<Button onClick={this.handleSubmit}>Submit</Button>
+				<PasswordWidget
+					passwordPattern={this.state.passwordPattern}
+					stringToTest={this.state.password}
+				/>
+				<Button disabled={!this.state.enableButton} onClick={this.handleSubmit}>
+					Submit
+				</Button>
 			</Form>
 		);
 	}
