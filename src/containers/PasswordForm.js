@@ -71,7 +71,14 @@ export class PasswordForm extends Component {
 	};
 
 	handleSubmit = e => {
+		
 		console.log({ ...this.state, passwordPattern: "" });
+		this.setState({
+			password:"",
+			url:"",
+			username:""
+		})
+		
 	};
 
 	render() {
@@ -84,6 +91,7 @@ export class PasswordForm extends Component {
 						type="text"
 						required
 						labelText="Tautan"
+						value={this.state.url}
 					/>
 					<TextInput
 						id="username"
@@ -91,6 +99,7 @@ export class PasswordForm extends Component {
 						type="text"
 						required
 						labelText="Username"
+						value={this.state.username}
 					/>
 					<TextInput
 						id="password"
@@ -98,6 +107,7 @@ export class PasswordForm extends Component {
 						type="password"
 						required
 						labelText="Kata Sandi"
+						value={this.state.password}
 					/>
 				</FormGroup>
 				<PasswordWidget
