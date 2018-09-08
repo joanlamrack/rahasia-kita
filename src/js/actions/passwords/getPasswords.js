@@ -30,8 +30,8 @@ function getPasswordAction(userUid) {
 		dispatch(passwordFetchLoading());
 		masterctrl.passwordController
 			.getAllPassword(userUid)
-			.then(snaphot => {
-				dispatch(passwordFetchSuccess(snaphot.val()));
+			.then(passwords => {
+				dispatch(passwordFetchSuccess(passwords));
 			})
 			.catch(err => {
 				dispatch(passwordsFetchError(err));

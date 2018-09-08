@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import TodoReducer from "./todos";
+import PasswordReducer from "./passwords";
 import LoginReducer from "./userlogin";
 
 export default combineReducers({
-	todos: TodoReducer,
+	passwords: PasswordReducer,
 	login: LoginReducer
 });
