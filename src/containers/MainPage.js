@@ -9,7 +9,7 @@ export default class MainPage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isLoggedIn: true
+			isLoggedIn: false
 		};
 	}
 	render() {

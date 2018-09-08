@@ -4,7 +4,7 @@ import {auth} from "./firebase";
 
 
 export const uiConfig = {
-	signInSuccessUrl: "/",
+	signInSuccessUrl: "/dashboard",
 	signInFlow:"popup",
 	signInOptions:[
 		firebase.auth.GoogleAuthProvider.PROVIDER_ID,

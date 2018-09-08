@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "carbon-components-react";
+import {auth } from "../configs/firebase";
 import "../App.css";
 import logo from "../logo.svg";
 
@@ -12,7 +13,7 @@ export default class Navbar extends Component {
 			</Fragment>
 		);
 
-		let showLogout = <Button>Keluar</Button>;
+		let showLogout = <Button onClick={()=> auth.signOut()}>Keluar</Button>;
 
 		return (
 			<header className="App-header">
