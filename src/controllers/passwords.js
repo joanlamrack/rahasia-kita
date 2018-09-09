@@ -5,7 +5,8 @@ import { convertObjectToArrayWithId } from "../helpers/dataHelper";
 function initialize(userUid) {
 	let newDate = getNewDateString();
 	return new Promise((resolve, reject) => {
-		getAllPasswords(userUid)
+		db.ref("users/" + userUid + "/passwords")
+			.once("value")
 			.then(data => {
 				if (!data.val()) {
 					return db

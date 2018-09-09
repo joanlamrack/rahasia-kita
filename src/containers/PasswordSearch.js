@@ -3,12 +3,17 @@ import {
 	DataTable,
 	ModalWrapper,
 	DataTableSkeleton,
-	SkeletonText
+	SkeletonText,
+	Button
 } from "carbon-components-react";
 import "carbon-components/css/carbon-components.min.css";
 import { iconDelete } from "carbon-icons";
 import PasswordForm from "./PasswordForm";
-import { getPasswordAction } from "../js/actions/passwords";
+import {
+	getPasswordAction,
+	deletePasswordAction,
+	initializeAction
+} from "../js/actions/passwords";
 import { connect } from "react-redux";
 
 const {
@@ -21,7 +26,6 @@ const {
 	TableHeader,
 	TableToolbar,
 	TableToolbarSearch,
-	TableToolbarAction,
 	TableToolbarContent,
 	TableSelectAll,
 	TableSelectRow
@@ -38,8 +42,14 @@ const mapStateToProps = state => {
 
 const maptDispatchToProps = dispatch => {
 	return {
+		deletePassword: (useruid, arrPasswordIds) => {
+			dispatch(deletePasswordAction(useruid, arrPasswordIds));
+		},
 		fetchPassword: useruid => {
 			dispatch(getPasswordAction(useruid));
+		},
+		initialize:(useruid)=>{
+			dispatch(initializeAction(useruid))
 		}
 	};
 };
@@ -58,7 +68,7 @@ export class PasswordSearch extends Component {
 	}
 
 	handleDeletion = selectedRows => {
-		console.log(selectedRows);
+		this.props.deletePassword(this.props.useruid, selectedRows.map(x => x.id));
 	};
 
 	render() {
@@ -82,17 +92,20 @@ export class PasswordSearch extends Component {
 									id="transactional-passive-modal"
 									className="some-class"
 									passiveModal
-									buttonTriggerText="+"
+									buttonTriggerText="Tambah"
+									icon={iconDelete}
 									triggerButtonKind="secondary"
 									modalLabel="Tambah Kata Sandi"
 								>
 									<PasswordForm />
 								</ModalWrapper>
-								<TableToolbarAction
+								<Button
 									icon={iconDelete}
-									iconDescription="delete"
 									onClick={() => this.handleDeletion(selectedRows)}
-								/>
+									kind="danger"
+								>
+									Hapus
+								</Button>
 							</TableToolbarContent>
 						</TableToolbar>
 						<Table zebra={true}>
@@ -129,11 +142,12 @@ export class PasswordSearch extends Component {
 			</Fragment>
 		);
 
-		return this.props.passwords.length ? dataTableFilled : dataTableLoading;
+		return !this.props.loading ? dataTableFilled : dataTableLoading;
 	}
 
 	componentWillMount() {
 		this.props.fetchPassword(this.props.useruid);
+		this.props.initialize(this.props.useruid);
 	}
 }
 

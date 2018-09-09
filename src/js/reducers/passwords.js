@@ -15,7 +15,10 @@ import {
 	ADD_PASSWORD,
 	ADD_PASSWORD_FAILED,
 	ADD_PASSWORD_LOADING,
-	ADD_PASSWORD_SUCCESS
+	ADD_PASSWORD_SUCCESS,
+	INITIALIZE_LOADING,
+	INITIALIZE_FAILED,
+	INITIALIZE_SUCCESS
 } from "../constants/passwords";
 
 const initialState = {
@@ -36,16 +39,19 @@ export default (state = initialState, action) => {
 	case FETCH_PASSWORDS_FAILED:
 	case UPDATE_PASSWORD_FAILED:
 	case ADD_PASSWORD_FAILED:
+	case INITIALIZE_FAILED:
 		return { ...state, error: action.payload };
 	case DELETE_PASSWORDS_LOADING:
 	case FETCH_PASSWORDS_LOADING:
 	case UPDATE_PASSWORD_LOADING:
 	case ADD_PASSWORD_LOADING:
+	case INITIALIZE_LOADING:
 		return { ...state, loading: true };
 	case DELETE_PASSWORDS_SUCCESS:
 	case FETCH_PASSWORDS_SUCCESS:
 	case UPDATE_PASSWORD_SUCCESS:
 	case ADD_PASSWORD_SUCCESS:
+	case INITIALIZE_SUCCESS:
 		return { ...initialState, data: action.payload };
 	default:
 		return state;

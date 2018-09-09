@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { auth } from "../configs/firebase";
 import { login, logout } from "../js/actions/userlogin";
 
@@ -27,9 +27,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export class MainPage extends Component {
-	constructor() {
-		super();
-	}
 	render() {
 		return (
 			<Fragment>
@@ -54,7 +51,6 @@ export class MainPage extends Component {
 							}
 						/>
 						<Route component={NotFound} />
-						{/* {this.props.isLoggedIn ? <PasswordSearch /> : <SignIn />} */}
 					</Switch>
 				</BrowserRouter>
 			</Fragment>
