@@ -140,7 +140,7 @@ export class PasswordForm extends Component {
 					stringToTest={this.state.password}
 				/>
 				<Button disabled={!this.state.enableButton} onClick={this.handleSubmit}>
-					Submit
+					Tambah
 				</Button>
 			</Form>
 		);

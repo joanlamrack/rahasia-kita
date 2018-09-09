@@ -48,8 +48,8 @@ const maptDispatchToProps = dispatch => {
 		fetchPassword: useruid => {
 			dispatch(getPasswordAction(useruid));
 		},
-		initialize:(useruid)=>{
-			dispatch(initializeAction(useruid))
+		initialize: useruid => {
+			dispatch(initializeAction(useruid));
 		}
 	};
 };
