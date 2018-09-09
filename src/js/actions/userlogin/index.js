@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../constants/userlogin";
+import { LOGIN, LOGOUT } from "../../constants/userlogin";
 
 function login(userUid) {
 	return {

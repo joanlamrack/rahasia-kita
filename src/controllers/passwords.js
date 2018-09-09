@@ -37,8 +37,8 @@ function createPasswords(userUid, passwordObj) {
 	return new Promise((resolve, reject) => {
 		let newDate = getNewDateString();
 		getAllPasswords(userUid)
-			.then(function(snapshot) {
-				let keys = Object.keys(snapshot.val());
+			.then(passwords => {
+				let keys = passwords.length ? passwords.map(x => x.id) : ["0"];
 				let lastIndex = keys.pop();
 				resolve(
 					db
@@ -89,8 +89,8 @@ function updatePasswords(userUid, passwordId, passwordUpdateObj) {
 }
 
 function deletePasswords(userUid, passwordIds) {
-	let promiseArr = passwordIds.map(x=>{
-		db.ref(`users/${userUid}/passwords/${x}`).set(null);
+	let promiseArr = passwordIds.map(x => {
+		return db.ref(`users/${userUid}/passwords/${x}`).set(null);
 	});
 	return Promise.all(promiseArr);
 }

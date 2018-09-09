@@ -3,7 +3,7 @@ import {
 	FETCH_PASSWORDS_SUCCESS,
 	FETCH_PASSWORDS_LOADING
 } from "../../constants/passwords";
-import masterctrl from "../../../controllers";
+import { passwordController } from "../../../controllers";
 
 function passwordsFetchError(error) {
 	return {
@@ -28,7 +28,7 @@ function passwordFetchLoading() {
 function getPasswordAction(userUid) {
 	return dispatch => {
 		dispatch(passwordFetchLoading());
-		masterctrl.passwordController
+		passwordController
 			.getAllPassword(userUid)
 			.then(passwords => {
 				dispatch(passwordFetchSuccess(passwords));
@@ -39,5 +39,9 @@ function getPasswordAction(userUid) {
 	};
 }
 
-
-export default { passwordFetchLoading, passwordFetchSuccess, passwordsFetchError, getPasswordAction };
+export {
+	passwordFetchLoading,
+	passwordFetchSuccess,
+	passwordsFetchError,
+	getPasswordAction
+};
