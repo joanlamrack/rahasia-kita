@@ -1,6 +1,28 @@
 import React, { Component } from "react";
 import { Form, FormGroup, TextInput, Button } from "carbon-components-react";
 import PasswordWidget from "../components/PasswordWidget";
+import { createPasswordAction } from "../js/actions/passwords";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+	return {
+		useruid: state.login.uid
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		createPassword: (useruid, url, password, username) => {
+			dispatch(
+				createPasswordAction(useruid, {
+					url,
+					password,
+					username
+				})
+			);
+		}
+	};
+};
 
 export class PasswordForm extends Component {
 	constructor() {
@@ -71,7 +93,17 @@ export class PasswordForm extends Component {
 	};
 
 	handleSubmit = e => {
-		console.log({ ...this.state, passwordPattern: "" });
+		this.props.createPassword(
+			this.props.useruid,
+			this.state.url,
+			this.state.password,
+			this.state.username
+		);
+		this.setState({
+			username: "",
+			url: "",
+			password: ""
+		});
 	};
 
 	render() {
@@ -84,6 +116,7 @@ export class PasswordForm extends Component {
 						type="text"
 						required
 						labelText="Tautan"
+						value={this.state.url}
 					/>
 					<TextInput
 						id="username"
@@ -91,6 +124,7 @@ export class PasswordForm extends Component {
 						type="text"
 						required
 						labelText="Username"
+						value={this.state.username}
 					/>
 					<TextInput
 						id="password"
@@ -98,6 +132,7 @@ export class PasswordForm extends Component {
 						type="password"
 						required
 						labelText="Kata Sandi"
+						value={this.state.password}
 					/>
 				</FormGroup>
 				<PasswordWidget
@@ -112,4 +147,7 @@ export class PasswordForm extends Component {
 	}
 }
 
-export default PasswordForm;
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(PasswordForm);

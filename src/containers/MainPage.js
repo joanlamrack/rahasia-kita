@@ -1,28 +1,46 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+import { auth } from "../configs/firebase";
+import { login, logout } from "../js/actions/userlogin";
+
 import Navbar from "./Navbar";
 import SignIn from "./SignIn";
 import PasswordSearch from "./PasswordSearch";
 import NotFound from "../components/NotFound";
+import { connect } from "react-redux";
 
-export default class MainPage extends Component {
+const mapStateToProps = state => {
+	return {
+		isLoggedIn: state.login.isLoggedIn
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		login: userUid => {
+			dispatch(login(userUid));
+		},
+		logout: () => {
+			dispatch(logout());
+		}
+	};
+};
+
+export class MainPage extends Component {
 	constructor() {
 		super();
-		this.state = {
-			isLoggedIn: false
-		};
 	}
 	render() {
 		return (
 			<Fragment>
-				<Navbar isLoggedIn={this.state.isLoggedIn}/>
+				<Navbar isLoggedIn={this.props.isLoggedIn} />
 				<BrowserRouter>
 					<Switch>
 						<Route
 							exact
 							path="/"
 							render={() =>
-								this.state.isLoggedIn ? (
+								this.props.isLoggedIn ? (
 									<Redirect to="/dashboard" />
 								) : (
 									<SignIn />
@@ -32,13 +50,29 @@ export default class MainPage extends Component {
 						<Route
 							path="/dashboard"
 							render={() =>
-								this.state.isLoggedIn ? <PasswordSearch /> : <Redirect to="/" />
+								this.props.isLoggedIn ? <PasswordSearch /> : <Redirect to="/" />
 							}
 						/>
 						<Route component={NotFound} />
+						{/* {this.props.isLoggedIn ? <PasswordSearch /> : <SignIn />} */}
 					</Switch>
 				</BrowserRouter>
 			</Fragment>
 		);
 	}
+
+	componentWillMount() {
+		auth.onAuthStateChanged(user => {
+			if (user) {
+				this.props.login(user.uid);
+			} else {
+				this.props.logout();
+			}
+		});
+	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(MainPage);

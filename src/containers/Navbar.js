@@ -1,10 +1,20 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "carbon-components-react";
-import {auth } from "../configs/firebase";
+import { auth } from "../configs/firebase";
+import { logout } from "../js/actions/userlogin";
+import { connect } from "react-redux";
 import "../App.css";
 import logo from "../logo.svg";
 
-export default class Navbar extends Component {
+const mapDispatchToProps = dispatch => {
+	return {
+		logout: () => {
+			auth.signOut();
+			dispatch(logout());
+		}
+	};
+};
+export class Navbar extends Component {
 	render() {
 		let showLogo = (
 			<Fragment>
@@ -12,8 +22,7 @@ export default class Navbar extends Component {
 				<h1 className="App-title">Rahasia Kita</h1>
 			</Fragment>
 		);
-
-		let showLogout = <Button onClick={()=> auth.signOut()}>Keluar</Button>;
+		let showLogout = <Button onClick={this.props.logout}>Keluar</Button>;
 
 		return (
 			<header className="App-header">
@@ -22,3 +31,8 @@ export default class Navbar extends Component {
 		);
 	}
 }
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(Navbar);

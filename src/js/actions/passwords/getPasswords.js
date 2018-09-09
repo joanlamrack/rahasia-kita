@@ -29,7 +29,7 @@ function getPasswordAction(userUid) {
 	return dispatch => {
 		dispatch(passwordFetchLoading());
 		passwordController
-			.getAllPassword(userUid)
+			.getAllPasswords(userUid)
 			.then(passwords => {
 				dispatch(passwordFetchSuccess(passwords));
 			})
