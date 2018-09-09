@@ -8,6 +8,7 @@ import SignIn from "./SignIn";
 import PasswordSearch from "./PasswordSearch";
 import NotFound from "../components/NotFound";
 import { connect } from "react-redux";
+import PrivacyPolicy from "../components/PrivacyPolicy";
 
 const mapStateToProps = state => {
 	return {
@@ -49,6 +50,10 @@ export class MainPage extends Component {
 							render={() =>
 								this.props.isLoggedIn ? <PasswordSearch /> : <Redirect to="/" />
 							}
+						/>
+						<Route
+							path="/privacypolicy"
+							component={PrivacyPolicy}
 						/>
 						<Route component={NotFound} />
 					</Switch>
