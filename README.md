@@ -1,7 +1,7 @@
 # RahasiaKita
 Password Manager with React, Redux, Redux Thunk and Firebase
 
-Deployed version : [Firebase Server](rahasiakita.joanlamrack.me);
+Deployed version : [Firebase Server](http://rahasiakita.joanlamrack.me);
 
 Before installing the project, edit the env.template on the root of the project to match of your firebase config.
 
