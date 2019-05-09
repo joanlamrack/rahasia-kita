@@ -1,4 +1,7 @@
 # RahasiaKita
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/joanlamrack/rahasia-kita.svg)](https://greenkeeper.io/)
+
 Password Manager with React, Redux, Redux Thunk and Firebase
 
 Deployed version : [Firebase Server](http://rahasiakita.joanlamrack.me);
